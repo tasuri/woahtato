@@ -1,17 +1,11 @@
 export default class Player {
 
   constructor(x, y, r, c) {
-    this.position = {
-      x: this.x,
-      xSpeed: 0,
-      y: this.y,
-      ySpeed: 0,
-    }
 
-    //this.x = x;
-    //this.y = y;
-    //this.xVel = 0;
-    //this.yVel = 0;
+    this.x = x;
+    this.y = y;
+    this.xVel = 0;
+    this.yVel = 0;
 
     this.maxVel = 3;
     this.size = r;
@@ -59,7 +53,7 @@ export default class Player {
       case 'ArrowDown':
       case 's':
         if (active) {
-          if (this.yVel > this.maxVel) {
+          if (this.yVel < this.maxVel) {
             this.yVel += 0.5;
           }
         } else {
@@ -68,11 +62,23 @@ export default class Player {
         break;
       case 'ArrowLeft':
       case 'a':
-        this.xVel += -1;
+        if (active) {
+          if (this.xVel > -this.maxVel) {
+            this.xVel -= 0.5;
+          }
+        } else {
+          this.decayXVelocity()
+        }
         break;
       case 'ArrowRight':
       case 'd':
-        this.xVel += 1;
+        if (active) {
+          if (this.xVel < this.maxVel) {
+            this.xVel += 0.5;
+          }
+        } else {
+          this.decayXVelocity()
+        }
         break;
     }
   }
@@ -85,6 +91,19 @@ export default class Player {
         this.yVel += 0.1;
       }
       if (this.yVel === 0) {
+        clearInterval(handler);
+      }
+    }, 50);
+  }
+
+  decayXVelocity() {
+    const handler = setInterval(() => {
+      if (this.xVel > 0) {
+        this.xVel -= 0.5;
+      } else {
+        this.xVel += 0.5;
+      }
+      if (this.xVel === 0) {
         clearInterval(handler);
       }
     }, 50);
