@@ -15,6 +15,11 @@ export default class Player {
     this.shotRange = 30;
     this.tickRate = 0;
 
+    this.moveUp = false;
+    this.moveDown = false;
+    this.moveLeft = false;
+    this.moveRight = false;
+
     document.addEventListener('keyup', (e) => {
       this.moveHandler(e, false);
     });
@@ -43,76 +48,88 @@ export default class Player {
       case 'ArrowUp':
       case 'w':
         if (active) {
-          if (this.yVel > -this.maxVel) {
-            this.yVel -= 0.5;
-          }
+          this.moveUp = true;
         } else {
-          this.decayYVelocity()
+          this.moveUp = false;
         }
         break;
       case 'ArrowDown':
       case 's':
         if (active) {
-          if (this.yVel < this.maxVel) {
-            this.yVel += 0.5;
-          }
+          this.moveDown = true;
         } else {
-          this.decayYVelocity()
+          this.moveDown = false;
         }
         break;
       case 'ArrowLeft':
       case 'a':
         if (active) {
-          if (this.xVel > -this.maxVel) {
-            this.xVel -= 0.5;
-          }
+          this.moveLeft = true;
         } else {
-          this.decayXVelocity()
+          this.moveLeft = false;
         }
         break;
       case 'ArrowRight':
       case 'd':
         if (active) {
-          if (this.xVel < this.maxVel) {
-            this.xVel += 0.5;
-          }
+          this.moveRight = true;
         } else {
-          this.decayXVelocity()
+          this.moveRight = false;
         }
         break;
     }
   }
 
-  decayYVelocity() {
-    const handler = setInterval(() => {
-      if (this.yVel > 0) {
-        this.yVel -= 0.1;
-      } else {
-        this.yVel += 0.1;
+  checkMovement() {
+    if(this.moveUp === true) {
+      if(this.yVel > -this.maxVel) {
+        this.yVel -= 1;
       }
-      if (this.yVel === 0) {
-        clearInterval(handler);
+    }
+    if(this.moveDown === true) {
+      if(this.yVel < this.maxVel) {
+        this.yVel += 1;
       }
-    }, 50);
-  }
-
-  decayXVelocity() {
-    const handler = setInterval(() => {
-      if (this.xVel > 0) {
-        this.xVel -= 0.5;
-      } else {
-        this.xVel += 0.5;
+    }
+    if(this.moveLeft === true) {
+      if(this.xVel > -this.maxVel) {
+        this.xVel -= 1;
       }
-      if (this.xVel === 0) {
-        clearInterval(handler);
+    }
+    if(this.moveRight === true) {
+      if(this.xVel < this.maxVel) {
+        this.xVel += 1;
       }
-    }, 50);
+    }
+    if(!this.moveUp && !this.moveDown) {
+      if(this.yVel > 0) {
+        this.yVel -= 1;
+      } else if(this.yVel < 0) {
+        this.yVel += 1;
+      }
+    }
+    if(!this.moveLeft && !this.moveRight) {
+      if(this.xVel > 0) {
+        this.xVel -= 1;
+      } else if(this.xVel < 0) {
+        this.xVel += 1;
+      }
+    }
   }
 
   updatePosition(arenaWidth, arenaHeight) {
-    if (this.y > 0 + this.size && this.y < arenaHeight - this.size && this.x > 0 + this.size && this.x < arenaWidth - this.size) {
-      this.y = this.y + this.yVel;
-      this.x = this.x + this.xVel;
+    this.checkMovement();
+    this.y = this.y + this.yVel;
+    this.x = this.x + this.xVel;
+    if (this.y <= 0 + this.size) {
+      this.y = 0 + this.size;
+    } else if(this.y >= arenaHeight - this.size) {
+      this.y = arenaHeight - this.size;
+    }
+    if (this.x <= 0 + this.size) {
+      this.x = 0 + this.size;
+    } else if(this.x >= arenaWidth - this.size) {
+      this.x = arenaWidth - this.size;
     }
   }
 

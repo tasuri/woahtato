@@ -1,7 +1,7 @@
 const config = {
   arenaWidth: 1800,
   arenaHeight: 850,
-  gameTick: 50,
+  gameTick: 15,
 
   playerSize: 20,
 }
