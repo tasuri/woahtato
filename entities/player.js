@@ -1,15 +1,17 @@
-export default class Player {
+import config from "../config.js";
+import Entity from "./entity.js";
 
-  constructor(x, y, r, c) {
+export default class Player extends Entity {
 
-    this.x = x;
-    this.y = y;
-    this.xVel = 0;
-    this.yVel = 0;
+  constructor(r, c) {
+    super('player', 0, 0);
 
     this.maxVel = 3;
     this.size = r;
     this.color = c;
+
+    this.x = config.arenaWidth/2-this.size/2;
+    this.y = config.arenaHeight/2-this.size/2;
 
     this.ctx = undefined;
     this.shotRange = 30;
@@ -47,33 +49,33 @@ export default class Player {
     switch (e.key) {
       case 'ArrowUp':
       case 'w':
-        if (active) {
+        if (active && !this.moveUp) {
           this.moveUp = true;
-        } else {
+        } else if(!active) {
           this.moveUp = false;
         }
         break;
       case 'ArrowDown':
       case 's':
-        if (active) {
+        if (active && !this.moveDown) {
           this.moveDown = true;
-        } else {
+        } else if(!active) {
           this.moveDown = false;
         }
         break;
       case 'ArrowLeft':
       case 'a':
-        if (active) {
+        if (active && !this.moveLeft) {
           this.moveLeft = true;
-        } else {
+        } else if(!active) {
           this.moveLeft = false;
         }
         break;
       case 'ArrowRight':
       case 'd':
-        if (active) {
+        if (active && !this.moveRight) {
           this.moveRight = true;
-        } else {
+        } else if(!active) {
           this.moveRight = false;
         }
         break;

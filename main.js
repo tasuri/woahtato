@@ -1,5 +1,6 @@
 import config from './config.js';
-import Player from './player.js';
+import Enemy from './entities/enemy.js';
+import Player from './entities/player.js';
 
 
 window.onload = () => {
@@ -18,8 +19,6 @@ function gameInit() {
   ctx = gameCanv.getContext('2d');
 
   player = new Player(
-    gameCanv.offsetWidth/2-config.playerSize/2,
-    gameCanv.offsetHeight/2-config.playerSize/2,
     config.playerSize,
     '#000000'
   );
@@ -34,6 +33,6 @@ function mainLoop() {
   ctx.clearRect(0, 0, config.arenaWidth, config.arenaHeight);
 
   player.updatePosition(config.arenaWidth, config.arenaHeight);
-
+  
   player.draw();
 }
