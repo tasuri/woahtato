@@ -12,7 +12,7 @@ window.onload = () => {
 };
 
 
-let gameCanv, ctx, player;
+let gameCanv, ctx, player, enemy;
 
 function gameInit() {
   gameCanv = document.getElementById('game');
@@ -25,14 +25,18 @@ function gameInit() {
   player.setContext = ctx;
   player.setShotRange = 70;
   player.tickRate = config.gameTick;
+  enemy = new Enemy("test");
+  enemy.setContext = ctx;
 
   setInterval(mainLoop, config.gameTick);
 }
+
+
 
 function mainLoop() {
   ctx.clearRect(0, 0, config.arenaWidth, config.arenaHeight);
 
   player.updatePosition(config.arenaWidth, config.arenaHeight);
-  
+  enemy.draw();
   player.draw();
 }

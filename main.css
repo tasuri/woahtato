@@ -13,7 +13,5 @@ body {
 }
 
 #game {
-    border: 5px solid #000;
-    border-bottom-width: 15px;
-    border-right-width: 15px
+    border: 1px solid teal;
 }

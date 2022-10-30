@@ -31,14 +31,6 @@ export default class Player extends Entity {
     });
   }
 
-  set setContext(ctx) {
-    if (CanvasRenderingContext2D.prototype.isPrototypeOf(ctx)) {
-      this.ctx = ctx;
-    } else {
-      throw 'setContext(ctx): ctx is not type of CanvasRenderingContext2D';
-    }
-  }
-
   set setShotRange(range) {
     if (range > 0) {
       this.shotRange = range;
@@ -133,15 +125,6 @@ export default class Player extends Entity {
     } else if(this.x >= arenaWidth - this.size) {
       this.x = arenaWidth - this.size;
     }
-  }
-
-  draw() {
-    this.ctx.beginPath();
-    this.ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
-    this.ctx.strokeStyle = this.color;
-    this.ctx.stroke();
-    this.ctx.closePath();
-    this.drawShotRange(this.shotRange);
   }
 
   drawShotRange() {

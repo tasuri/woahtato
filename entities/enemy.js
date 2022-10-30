@@ -4,7 +4,9 @@ import Entity from "./entity.js"
 export default class Enemy extends Entity {
 
     constructor(type) {
+
         super(Math.random() * (config.arenaWidth - 0) + 0, Math.random() * (config.arenaHeight - 0) + 0)
+        this.x = 100, this.y = 100, this.size = 15, this.ctx = undefined;
 
     }
 

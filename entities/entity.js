@@ -8,6 +8,14 @@ export default class Entity extends Position {
         this.type = type;
     }
 
+    set setContext(ctx) {
+        if (CanvasRenderingContext2D.prototype.isPrototypeOf(ctx)) {
+          this.ctx = ctx;
+        } else {
+          throw 'setContext(ctx): ctx is not type of CanvasRenderingContext2D';
+        }
+      }
+
 
     draw() {
         this.ctx.beginPath();
@@ -15,7 +23,9 @@ export default class Entity extends Position {
         this.ctx.strokeStyle = this.color;
         this.ctx.stroke();
         this.ctx.closePath();
-        this.drawShotRange(this.shotRange);
+        if(typeof this.drawShotRange === 'function') {
+            this.drawShotRange(this.shotRange);
+        }
       }
 
 }
