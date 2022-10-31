@@ -10,12 +10,13 @@ export default class Player extends Entity {
     this.size = r;
     this.color = c;
 
-    this.x = config.arenaWidth/2-this.size/2;
-    this.y = config.arenaHeight/2-this.size/2;
+    this.x = config.arenaWidth / 2 - this.size / 2;
+    this.y = config.arenaHeight / 2 - this.size / 2;
 
     this.ctx = undefined;
     this.shotRange = 30;
-    this.tickRate = 0;
+
+    this.shotRangeVisual
 
     this.moveUp = false;
     this.moveDown = false;
@@ -43,7 +44,7 @@ export default class Player extends Entity {
       case 'w':
         if (active && !this.moveUp) {
           this.moveUp = true;
-        } else if(!active) {
+        } else if (!active) {
           this.moveUp = false;
         }
         break;
@@ -51,7 +52,7 @@ export default class Player extends Entity {
       case 's':
         if (active && !this.moveDown) {
           this.moveDown = true;
-        } else if(!active) {
+        } else if (!active) {
           this.moveDown = false;
         }
         break;
@@ -59,7 +60,7 @@ export default class Player extends Entity {
       case 'a':
         if (active && !this.moveLeft) {
           this.moveLeft = true;
-        } else if(!active) {
+        } else if (!active) {
           this.moveLeft = false;
         }
         break;
@@ -67,7 +68,7 @@ export default class Player extends Entity {
       case 'd':
         if (active && !this.moveRight) {
           this.moveRight = true;
-        } else if(!active) {
+        } else if (!active) {
           this.moveRight = false;
         }
         break;
@@ -75,37 +76,42 @@ export default class Player extends Entity {
   }
 
   checkMovement() {
-    if(this.moveUp === true) {
-      if(this.yVel > -this.maxVel) {
-        this.yVel -= 1;
+    if (!(this.moveUp && this.moveDown)) {
+      if (this.moveUp === true) {
+        if (this.yVel > -this.maxVel) {
+          this.yVel -= 1;
+        }
+      } else if (this.moveDown === true) {
+        if (this.yVel < this.maxVel) {
+          this.yVel += 1;
+        }
       }
     }
-    if(this.moveDown === true) {
-      if(this.yVel < this.maxVel) {
+
+    if (!(this.moveLeft && this.moveRight)) {
+      if (this.moveLeft === true) {
+        if (this.xVel > -this.maxVel) {
+          this.xVel -= 1;
+        }
+      } else if (this.moveRight === true) {
+        if (this.xVel < this.maxVel) {
+          this.xVel += 1;
+        }
+      }
+    }
+
+
+    if (!this.moveUp && !this.moveDown) {
+      if (this.yVel > 0) {
+        this.yVel -= 1;
+      } else if (this.yVel < 0) {
         this.yVel += 1;
       }
     }
-    if(this.moveLeft === true) {
-      if(this.xVel > -this.maxVel) {
+    if (!this.moveLeft && !this.moveRight) {
+      if (this.xVel > 0) {
         this.xVel -= 1;
-      }
-    }
-    if(this.moveRight === true) {
-      if(this.xVel < this.maxVel) {
-        this.xVel += 1;
-      }
-    }
-    if(!this.moveUp && !this.moveDown) {
-      if(this.yVel > 0) {
-        this.yVel -= 1;
-      } else if(this.yVel < 0) {
-        this.yVel += 1;
-      }
-    }
-    if(!this.moveLeft && !this.moveRight) {
-      if(this.xVel > 0) {
-        this.xVel -= 1;
-      } else if(this.xVel < 0) {
+      } else if (this.xVel < 0) {
         this.xVel += 1;
       }
     }
@@ -113,18 +119,13 @@ export default class Player extends Entity {
 
   updatePosition(arenaWidth, arenaHeight) {
     this.checkMovement();
-    this.y = this.y + this.yVel;
-    this.x = this.x + this.xVel;
-    if (this.y <= 0 + this.size) {
-      this.y = 0 + this.size;
-    } else if(this.y >= arenaHeight - this.size) {
-      this.y = arenaHeight - this.size;
+    if(config.arenaWidth > (this.x + this.size + this.xVel) && 0 < (this.x - this.size + this.xVel)) {
+      this.x = this.x + this.xVel;
     }
-    if (this.x <= 0 + this.size) {
-      this.x = 0 + this.size;
-    } else if(this.x >= arenaWidth - this.size) {
-      this.x = arenaWidth - this.size;
+    if(config.arenaHeight > (this.y + this.size + this.yVel) && 0 < (this.y - this.size + this.yVel)) {
+      this.y = this.y + this.yVel;
     }
+    
   }
 
   drawShotRange() {
@@ -135,6 +136,17 @@ export default class Player extends Entity {
     this.ctx.fill();
     this.ctx.stroke();
     this.ctx.closePath();
+  }
+
+  detectEnemiesInRange(enemy) {
+
+    if (Math.sqrt(((enemy.x - this.x) * (enemy.x - this.x)) + ((enemy.y - this.y) * (enemy.y - this.y))) <= this.shotRange + enemy.size) {
+      enemy.setInRange = true;
+      console.log('in Range')
+    } else {
+      enemy.setInRange = false;
+      console.log('not in Range')
+    }
   }
 
 }

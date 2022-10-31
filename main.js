@@ -2,9 +2,9 @@ import config from './config.js';
 import Enemy from './entities/enemy.js';
 import Player from './entities/player.js';
 
+"use strict";
 
 window.onload = () => {
-  "use strict";
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("./sw.js");
   }
@@ -23,8 +23,7 @@ function gameInit() {
     '#000000'
   );
   player.setContext = ctx;
-  player.setShotRange = 70;
-  player.tickRate = config.gameTick;
+  player.setShotRange = 150;
   enemy = new Enemy("test");
   enemy.setContext = ctx;
 
@@ -35,8 +34,8 @@ function gameInit() {
 
 function mainLoop() {
   ctx.clearRect(0, 0, config.arenaWidth, config.arenaHeight);
-
   player.updatePosition(config.arenaWidth, config.arenaHeight);
+  player.detectEnemiesInRange(enemy);
   enemy.draw();
   player.draw();
 }
