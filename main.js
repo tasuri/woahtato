@@ -1,4 +1,5 @@
-import config from './config.js';
+import config from './core/config.js';
+import View from './visual/view.js';
 import Enemy from './entities/enemy.js';
 import Player from './entities/player.js';
 
@@ -36,6 +37,30 @@ function mainLoop() {
   ctx.clearRect(0, 0, config.arenaWidth, config.arenaHeight);
   player.updatePosition(config.arenaWidth, config.arenaHeight);
   player.detectEnemiesInRange(enemy);
-  enemy.draw();
-  player.draw();
+
+  //@Todo spawner();
+
+  /**
+   * function SecsToTicks(secs){
+   *   return secs * 60;
+   * }
+   * 
+   * function TicksToSecs(ticks){
+   *   return ticks / 60;
+   * }
+   * 
+   * 
+   * global WaveTickLength = secsToTicks(30);
+   * 
+   * function spawner(){
+   *   totalMobs = loopDurchEnemies[level]  (45)
+   *   
+   *   toSpawn = totalMobs / WaveLength = 1.5
+   * 
+   *   fullMobCount += toSpawn % 1
+   * }
+   */
+
+  View.testEnemy(enemy.ctx, enemy.x, enemy.y, 15, '#ff0000')
+  View.player(player.ctx, player.x, player.y, player.size, '#00ff00', player.shotRange);
 }

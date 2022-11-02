@@ -1,4 +1,4 @@
-import config from "../config.js"
+import config from "../core/config.js"
 import Entity from "./entity.js"
 
 export default class Enemy extends Entity {

@@ -1,4 +1,4 @@
-import config from "../config.js";
+import config from "../core/config.js";
 import Entity from "./entity.js";
 
 export default class Player extends Entity {
@@ -126,16 +126,6 @@ export default class Player extends Entity {
       this.y = this.y + this.yVel;
     }
     
-  }
-
-  drawShotRange() {
-    this.ctx.beginPath();
-    this.ctx.strokeStyle = '#ff0000';
-    this.ctx.fillStyle = '#ff000009';
-    this.ctx.arc(this.x, this.y, this.shotRange, 0, 2 * Math.PI);
-    this.ctx.fill();
-    this.ctx.stroke();
-    this.ctx.closePath();
   }
 
   detectEnemiesInRange(enemy) {
