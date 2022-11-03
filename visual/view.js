@@ -8,8 +8,8 @@ export default class View{
         ctx.closePath();
 
         ctx.beginPath();
-        ctx.strokeStyle = '#ff0000';
-        ctx.fillStyle = '#ff000009';
+        ctx.strokeStyle = '#00000020';
+        ctx.fillStyle = '#00000005';
         ctx.arc(x, y, shotRange, 0, 2 * Math.PI);
         ctx.fill();
         ctx.stroke();

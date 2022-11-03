@@ -37,30 +37,9 @@ function mainLoop() {
   ctx.clearRect(0, 0, config.arenaWidth, config.arenaHeight);
   player.updatePosition(config.arenaWidth, config.arenaHeight);
   player.detectEnemiesInRange(enemy);
-
-  //@Todo spawner();
-
-  /**
-   * function SecsToTicks(secs){
-   *   return secs * 60;
-   * }
-   * 
-   * function TicksToSecs(ticks){
-   *   return ticks / 60;
-   * }
-   * 
-   * 
-   * global WaveTickLength = secsToTicks(30);
-   * 
-   * function spawner(){
-   *   totalMobs = loopDurchEnemies[level]  (45)
-   *   
-   *   toSpawn = totalMobs / WaveLength = 1.5
-   * 
-   *   fullMobCount += toSpawn % 1
-   * }
-   */
+  
+  enemy.movement(3, player);
 
   View.testEnemy(enemy.ctx, enemy.x, enemy.y, 15, '#ff0000')
-  View.player(player.ctx, player.x, player.y, player.size, '#00ff00', player.shotRange);
+  View.player(player.ctx, player.x, player.y, player.size, '#000000', player.shotRange);
 }
