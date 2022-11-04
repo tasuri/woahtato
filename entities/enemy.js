@@ -6,12 +6,9 @@ export default class Enemy extends Entity {
 
     constructor(type) {
 
-        super(type, Math.round(Math.random() * config.arenaWidth), Math.round(Math.random() * config.arenaHeight));
+        super(type, Math.round(Math.random() * config.arenaWidth), Math.round(Math.random() * config.arenaHeight), 0, 0, 1.5);
         this.size = 15,
             this.ctx = undefined;
-
-        this.maxVelY;
-        this.maxVelX;
 
         this.inRange = false;
     }
@@ -24,7 +21,7 @@ export default class Enemy extends Entity {
         }
     }
 
-    movement(maxVel, player) {
+    movement(player) {
 
         if (Math.abs(this.x - player.x) > player.size || Math.abs(this.y - player.y) > player.size) {
             let diffX, diffY, diffAbsX, diffAbsY, moveX, moveY;

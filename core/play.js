@@ -1,12 +1,19 @@
+import * as levels from './levels.js'
+
 export default class Play {
 
+    constructor() {
+    }
 
-    static spawner() {
-        totalMobs = loopDurchEnemies[level]  (45)
-     
-        toSpawn = totalMobs / WaveLength = 1.5
-      
-        fullMobCount += toSpawn % 1
+    spawner() {
+
+        console.log(levels)
+
+        //totalMobs = loopDurchEnemies[level]  (45)
+     //
+        //toSpawn = totalMobs / WaveLength = 1.5
+      //
+        //fullMobCount += toSpawn % 1
     }
 
 

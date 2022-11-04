@@ -1,4 +1,4 @@
-[
+export default [
     {
         "length": 30,
         "enemies": {

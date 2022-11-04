@@ -2,6 +2,7 @@ import config from './core/config.js';
 import View from './visual/view.js';
 import Enemy from './entities/enemy.js';
 import Player from './entities/player.js';
+import Play from './core/play.js';
 
 "use strict";
 
@@ -13,7 +14,7 @@ window.onload = () => {
 };
 
 
-let gameCanv, ctx, player, enemy;
+let gameCanv, ctx, player, enemy, play;
 
 function gameInit() {
   gameCanv = document.getElementById('game');
@@ -25,6 +26,7 @@ function gameInit() {
   );
   player.setContext = ctx;
   player.setShotRange = 150;
+  play = new Play();
   enemy = new Enemy("test");
   enemy.setContext = ctx;
 
@@ -37,8 +39,10 @@ function mainLoop() {
   ctx.clearRect(0, 0, config.arenaWidth, config.arenaHeight);
   player.updatePosition(config.arenaWidth, config.arenaHeight);
   player.detectEnemiesInRange(enemy);
+
+  play.spawner();
   
-  enemy.movement(3, player);
+  enemy.movement(player);
 
   View.testEnemy(enemy.ctx, enemy.x, enemy.y, 15, '#ff0000')
   View.player(player.ctx, player.x, player.y, player.size, '#000000', player.shotRange);

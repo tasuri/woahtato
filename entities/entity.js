@@ -2,8 +2,8 @@ import Position from "./position.js";
 
 export default class Entity extends Position {
 
-    constructor(type, x, y) {
-        super(x, y);
+    constructor(type, x, y, maxVel) {
+        super(x, y, 0, 0, 1.5);
 
         this.type = type;
     }
